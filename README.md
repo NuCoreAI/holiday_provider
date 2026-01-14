@@ -1,30 +1,18 @@
-# NuCore Hebcal Provider Plugin
+# NuCore Holiday Provider Plugin
 
-Jewish holiday provider for NuCore that fetches data from Hebcal API.
+Base Holiday Provider for NuCore. Subclasses must implmenet all the abstract methods. 
 
 ## Installation
 
 ```bash
-pip install nucore-hebcal-provider
+pip install nucore_holiday_provider
 ```
 
 ## Usage
 
 ```python
-from nucore_hebcal_provider import HebcalHolidayProvider
+from nucore_holiday_provider import 
 
-provider = HebcalHolidayProvider(
-    tz_str="America/New_York",
-    latitude=40.7128,
-    longitude=-74.0060
-)
-
-holidays = await provider.holidays_for_year(2026)
 ```
-
 ## Features
 
-- Fetches Jewish holidays from Hebcal API
-- Includes candle lighting times
-- Provides prompt context for holiday-specific rules
-- Supports all Hebcal categories (major, minor, modern, etc.)
