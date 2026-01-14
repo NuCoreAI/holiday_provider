@@ -11,8 +11,9 @@ readme = "README.md"
 requires-python = ">=3.10"
 license = "MIT"
 authors = [
-    { name="Michel Kohanim", email="michel@universal-devices.com" }
+ { name="Michel Kohanim", email="michel@universal-devices.com" },
 ]
+
 dependencies = [
 ]
 
