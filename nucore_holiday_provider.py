@@ -40,9 +40,9 @@ class NuCoreHolidayProvider(ABC):
         """
         return f"Current Location is at latitude {self.latitude}, longitude {self.longitude}, timezone {self.tz_str}."
 
-    async def get_holidays(self, event: str, start_year: int, end_year: int, start_month: int, end_month: int) -> str:
+    async def get_holidays(self, event: str, start_year: int, end_year: int, start_month: int, end_month: int) -> List[HolidayEvent]:
         """
-            Subclass: Get holidays given the filters.
+            Get holidays given the filters.
             :param event: Event name filter (substring match) - if None, no filter
             :param start_year: Starting year (inclusive) - if None, no filter
             :param end_year: Ending year (inclusive) - if None, no filter
@@ -54,6 +54,10 @@ class NuCoreHolidayProvider(ABC):
         if not holidays:
             return "No holidays found for the specified criteria."
         
+    async def format_holidays(self, holidays: List[HolidayEvent]) -> str:
+        out = self._format_holidays(holidays)
+        if out is not None:
+            return out
         result_lines = []
         for holiday in holidays:
             holiday_title = holiday.title if holiday.title else ""
@@ -71,6 +75,15 @@ class NuCoreHolidayProvider(ABC):
         
         return "\n".join(result_lines)
 
+    @abstractmethod 
+    async def _format_holidays(self, holidays: List[HolidayEvent]) -> str:
+        """
+        Docstring for format_holidays
+        :holidays: List[HolidayEvent] - list of holiday events to formet
+        :return: formatted promptified string. If you want default formatting, return None
+        """
+        return None
+    
     @abstractmethod
     async def _get_prompt(self) -> str:
         """
