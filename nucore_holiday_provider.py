@@ -40,7 +40,7 @@ class NuCoreHolidayProvider(ABC):
         """
         return f"Current Location is at latitude {self.latitude}, longitude {self.longitude}, timezone {self.tz_str}."
 
-    async def get_holidays(self, event: str, start_year: int, end_year: int, start_month: int, end_month: int) -> List[HolidayEvent]:
+    async def get_holidays(self, event: str, start_year: int, end_year: int, start_month: int, end_month: int) -> str: 
         """
             Get holidays given the filters.
             :param event: Event name filter (substring match) - if None, no filter
@@ -53,9 +53,10 @@ class NuCoreHolidayProvider(ABC):
         holidays = await self._get_holidays(event, start_year, end_year, start_month, end_month)
         if not holidays:
             return "No holidays found for the specified criteria."
-        
+        return await self.format_holidays(holidays)
+
     async def format_holidays(self, holidays: List[HolidayEvent]) -> str:
-        out = self._format_holidays(holidays)
+        out = await self._format_holidays(holidays)
         if out is not None:
             return out
         result_lines = []
